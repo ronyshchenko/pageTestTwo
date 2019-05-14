@@ -1,0 +1,130 @@
+$cardSize: 200px;
+$horizontalGap: 30px;
+$horizontalPadding: 35px;
+$rankSize: 32px;
+$extraHeight: 36px;
+$animationPeriod: 1s;
+
+@function calculateWidth($columns) {
+@return $columns * $cardSize + $horizontalGap * ($columns - 1) + 2 * $horizontalPadding;
+}
+
+html, body {
+margin: 0;
+min-width: calculateWidth(2);
+font-family: Arial, sans-serif;
+}
+
+.people {
+display: grid;
+justify-content: center;
+grid: auto-flow / repeat(2, $cardSize);
+padding: 30px 35px;
+gap: 40px 30px;
+
+.person {
+ position: relative;
+ transition-property: transform, z-index;
+ transition-duration: $animationPeriod;
+ transition: transform 1s;
+
+
+.photo {
+ position: relative;
+
+img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.rank {
+  position: absolute;
+  width: $rankSize;
+  height: $rankSize;
+  right: 10px;
+  top: ($cardSize - $rankSize) / 2;
+  background: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: $rankSize;
+  font-size: 16px;
+  font-weight: bold;
+  color:#8b0000;
+}
+}
+
+.details {
+ text-align: center;
+
+ .name {
+   color: #2f4f4f;
+   font-size: 20px;
+   font-weight: bold;
+   margin-top: 8px;
+   line-height: 23px;
+   display: block;
+ }
+
+ .extra {
+   display: none;
+ }
+
+}
+ &:hover {
+   z-index: 1;
+   transform: scale(1.2);
+   $padding:10px;
+
+   .photo {
+     img {
+       border-radius: 25%;
+       transition: border-radius 1s;
+     }
+   }
+
+   .extra{
+     display: block;
+     position: absolute;
+     top: 100%;
+     left: 0;
+     right: 0;
+     text-align: center;
+     height: $extraHeight;
+     line-height: $extraHeight;
+     font-size: 18px;
+
+     .sport::after {
+       content: ",";
+       display: inline;
+     }
+
+     .pay::before {
+       content: "$";
+     }
+
+     .pay::after {
+       content: "M";
+       display: inline;
+     }
+   }
+   &::after{
+     position: absolute;
+     content: "";
+     display: block;
+     left: -$padding;
+     top: -$padding;
+     right: -$padding;
+     bottom: -$extraHeight - $padding;
+     background: #EEEEEE;
+     z-index: -1;
+     border-radius: 10px;
+   }
+ }
+}
+}
+
+@media (min-width: calculateWidth(4)) {
+.people {
+  grid-template-columns: repeat(4, $cardSize);
+}
+}
